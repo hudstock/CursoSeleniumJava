@@ -5,14 +5,17 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import br.com.alura.leilao.leiloes.LeiloesPage;
+
 public class LoginPage {
+	private static final String URL_LOGIN = "http://localhost:8080/login";
+	private static final String URL_PAGINA_RESTRITA = "http://localhost:8080/leiloes/2";
 
 	private WebDriver browser;
 
 	public LoginPage() {
 		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
 		browser = new ChromeDriver();
-
 	}
 
 	public void fechar() {
@@ -20,42 +23,40 @@ public class LoginPage {
 		this.browser.quit();
 	}
 
-	public void abrirPagina(String urlLogin) {
+	public void abrirPaginaLogin() {
+		this.browser.navigate().to(URL_LOGIN);
+	}
 
-		this.browser.navigate().to(urlLogin);
-
+	public void abrirPaginaRestrita() {
+		this.browser.navigate().to(URL_PAGINA_RESTRITA);
 	}
 
 	public void preencherFormulario(String username, String password) {
-
 		browser.findElement(By.id("username")).sendKeys(username);
 		browser.findElement(By.id("password")).sendKeys(password);
-
 	}
 
-	public void enviarFormulario() {
-		
-		browser.findElement(By.id("login-form")).submit();		
+	public LeiloesPage enviarFormulario() {
+		browser.findElement(By.id("login-form")).submit();
+		return new LeiloesPage(browser);
 	}
 
 	public String getPaginaAtual() {
-		
 		return browser.getCurrentUrl();
 	}
 
 	public String getUsuarioLogado() {
 		try {
 			return browser.findElement(By.id("usuario-logado")).getText();
-			
+
 		} catch (NoSuchElementException e) {
 			return null;
 		}
-		
-		
+
 	}
 
 	public Boolean contemTexto(String conteudo) {
-		
+
 		return browser.getPageSource().contains(conteudo);
 	}
 

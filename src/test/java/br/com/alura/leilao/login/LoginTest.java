@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 public class LoginTest {
 
 	private static final String URL_LOGIN_ERROR = "http://localhost:8080/login?error";
-	private static final String URL_LOGIN = "http://localhost:8080/login";
-	private static final String URL_PAGINA_RESTRITA = "http://localhost:8080/leiloes/2";
+	private static final String URL_LOGIN = "http://localhost:8080/login";	
+	
 
 	private LoginPage loginPage;
 
@@ -28,7 +28,7 @@ public class LoginTest {
 	@Test
 	public void deveEfetuarLoginComDadosValidos() {
 
-		loginPage.abrirPagina(URL_LOGIN);
+		loginPage.abrirPaginaLogin();
 
 		loginPage.preencherFormulario("fulano", "pass");
 
@@ -42,7 +42,7 @@ public class LoginTest {
 	@Test
 	public void naoDeveEfetuarLoginComDadosInvalidos() {
 
-		loginPage.abrirPagina(URL_LOGIN);
+		loginPage.abrirPaginaLogin();
 
 		loginPage.preencherFormulario("invalido", "123456");
 		
@@ -56,7 +56,7 @@ public class LoginTest {
 	@Test
 	public void naoDeveAcessarPaginaRestritaSemEstarLogado() {
 
-		loginPage.abrirPagina(URL_PAGINA_RESTRITA);
+		loginPage.abrirPaginaRestrita();
 
 		Assertions.assertTrue(loginPage.getPaginaAtual().equals(URL_LOGIN));
 		Assertions.assertFalse(loginPage.contemTexto("Dados do Leilão"));
