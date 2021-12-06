@@ -21,7 +21,6 @@ public class LoginTest {
 
 	@AfterEach
 	public void afterEach() {
-
 		this.loginPage.fechar();
 	}
 
